@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+files:
+  - source: config/nginx/env.conf
+    destination: /etc/nginx/conf.d
+  - source: .
+    destination: /var/www/application
+permissions:
+  - object: /var/www/application
+    pattern: "**"
+    owner: apache
+    mode: 777
+    type:
+      - file
+      - directory
+hooks:
+  AfterInstall:
+    - location: config/reload.sh
+      runas: root
